@@ -2,7 +2,6 @@ import chalk from "chalk";
 import { Command } from "commander";
 
 import Debug from "./utils/debug";
-import { msToTc } from "./utils/msToTc";
 const figlet = require("figlet");
 const debug = Debug("CORE");
 
