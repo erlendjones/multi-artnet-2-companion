@@ -26,5 +26,5 @@ $ yarn dev
 you can also use params to change settings
 
 ```
-$ yarn dev --subnet=2 --universe=2 --net=2"´´´
+$ yarn dev --subnet=2 --universe=2 --net=2
 ```

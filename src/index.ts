@@ -44,7 +44,6 @@ var receiver = dmxnet.newReceiver({
 const oldValues: { [keys: string]: any } = {};
 
 receiver.on("data", (data: number[]) => {
-  console.log("DMX data:", data);
   const values = data;
   for (const key in values) {
     if (values.hasOwnProperty(key)) {
@@ -58,13 +57,18 @@ receiver.on("data", (data: number[]) => {
 });
 
 import fetch from "node-fetch";
+
+// LARSEN: kan endres om du vil kjøre companion remote, eller har endret porten
+const localCompanionHost = "127.0.0.1";
+const localCompanionPort = 8000;
 const handleValueChange = (channel: string, dmxValue: number) => {
+  debug("Pressing button", channel, dmxValue);
   // ip, port, page, button
-  fetch(`http://127.0.0.1:8000/press/bank/${channel}/${dmxValue}`).catch(
-    (err) => {
-      console.log("Error sending value to Companion", err);
-    }
-  );
+  fetch(
+    `http://${localCompanionHost}:${localCompanionPort}/press/bank/${channel}/${dmxValue}`
+  ).catch((err) => {
+    console.log("Error sending value to Companion", err);
+  });
 };
 
 const init = async () => {
