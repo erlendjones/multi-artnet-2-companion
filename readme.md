@@ -10,7 +10,7 @@ Tested with Node v18.16.0 and Yarn v1.22.19
 $ git clone git@github.com:erlendjones/multi-artnet-2-companion.git
 
 // Open folder
-$ cd simple-ping-monitor
+$ cd multi-artnet-2-companion
 
 // Install node_modules with
 $ yarn
