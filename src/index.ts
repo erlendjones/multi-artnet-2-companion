@@ -1,28 +1,10 @@
-import chalk from "chalk";
-import { Command } from "commander";
-
 import Debug from "./utils/debug";
-const figlet = require("figlet");
+import { options } from "./options";
+
 const debug = Debug("CORE");
+const dmxlib = require("dmxnet");
 
-const program = new Command();
-
-console.log(figlet.textSync("Art2Companion"));
-
-program
-  .version("1.0.0")
-  .description("Multi Artnet 2 Companion converter")
-  .option("-e, --emitRandom <emitRandom>", "Emit Random Artnet-Data")
-  .option("-s, --subnet <subnet>", "Artnet Subnet")
-  .option("-u, --universe <universe>", "Artnet Universe")
-  .option("-n, --net <net>", "Artnet Net")
-  .parse(process.argv);
-
-const options = program.opts();
-
-var dmxlib = require("dmxnet");
-
-var dmxnet = new dmxlib.dmxnet({
+const dmxnet = new dmxlib.dmxnet({
   log: { level: "info" }, // Winston logger options
   oem: 0, // OEM Code from artisticlicense, default to dmxnet OEM.
   esta: 0, // ESTA Manufacturer ID from https://tsp.esta.org, default to ESTA/PLASA (0x0000)
@@ -34,7 +16,7 @@ var dmxnet = new dmxlib.dmxnet({
 // LARSEN
 // Set subnet, universe and net to match your setup either here,
 // or with "yarn dev --subnet=2 --universe=2 --net=2"
-var receiver = dmxnet.newReceiver({
+const receiver = dmxnet.newReceiver({
   subnet: options.subnet || 0, //Destination subnet, default 0
   universe: options.universe || 0, //Destination universe, default 0
   net: options.net || 0, //Destination net, default 0
@@ -69,12 +51,6 @@ const handleValueChange = (channel: string, dmxValue: number) => {
     console.log("Error sending value to Companion", err);
   });
 };
-
-const init = async () => {
-  debug("Running...");
-};
-
-init();
 
 /*
 
