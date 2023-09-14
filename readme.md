@@ -18,7 +18,7 @@ $ yarn
 // or
 $ npm install
 ```
-
+<h2>Run</h2>
 ```
 $ yarn dev
 ```
