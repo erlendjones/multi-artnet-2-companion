@@ -1,5 +1,8 @@
 import Debug from "./utils/debug";
 import { options } from "./options";
+import { generatePages } from "./generatePages";
+
+generatePages();
 
 const debug = Debug("CORE");
 const dmxlib = require("dmxnet");
@@ -44,14 +47,15 @@ const localCompanionHost = "127.0.0.1";
 const localCompanionPort = 8888;
 const handleValueChange = (channel: string, dmxValue: number) => {
   const page = Number(channel) + 1;
+  const button = dmxValue;
   if (dmxValue === 0) {
-    debug("Received 0 for page", channel);
+    debug("Received 0 for page", page);
     return;
   }
-  debug("Pressing page", channel, "button", dmxValue);
+  debug("Pressing page", page, "button", button);
   // ip, port, page, button
   fetch(
-    `http://${localCompanionHost}:${localCompanionPort}/press/bank/${channel}/${dmxValue}`
+    `http://${localCompanionHost}:${localCompanionPort}/press/bank/${page}/${button}`
   ).catch((err) => {
     console.log("Error sending value to Companion", err);
   });
