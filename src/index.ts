@@ -41,9 +41,14 @@ import fetch from "node-fetch";
 
 // LARSEN: kan endres om du vil kjøre companion remote, eller har endret porten
 const localCompanionHost = "127.0.0.1";
-const localCompanionPort = 8000;
+const localCompanionPort = 8888;
 const handleValueChange = (channel: string, dmxValue: number) => {
-  debug("Pressing button", channel, dmxValue);
+  const page = Number(channel) + 1;
+  if (dmxValue === 0) {
+    debug("Received 0 for page", channel);
+    return;
+  }
+  debug("Pressing page", channel, "button", dmxValue);
   // ip, port, page, button
   fetch(
     `http://${localCompanionHost}:${localCompanionPort}/press/bank/${channel}/${dmxValue}`
